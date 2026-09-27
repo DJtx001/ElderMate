@@ -4,16 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-    <groupId>com.xhzb</groupId>
-    <artifactId>xhzb</artifactId>
+    <groupId>com.ylzb</groupId>
+    <artifactId>ylzb</artifactId>
     <version>3.9.0</version>
 
-    <name>xhzb</name>
-    <url>http://www.xhzb.com</url>
-    <description>星海智伴后台管理系统</description>
+    <name>ylzb</name>
+    <url>http://www.ylzb.com</url>
+    <description>养老智伴后台管理系统</description>
     
     <properties>
-        <xhzb.version>3.9.0</xhzb.version>
+        <ylzb.version>3.9.0</ylzb.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
@@ -38,6 +38,13 @@
     <!-- 依赖声明 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>1.1.2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!-- SpringBoot的依赖配置-->
             <dependency>
@@ -133,51 +140,51 @@
 
             <!-- 定时任务-->
             <dependency>
-                <groupId>com.xhzb</groupId>
-                <artifactId>xhzb-quartz</artifactId>
-                <version>${xhzb.version}</version>
+                <groupId>com.ylzb</groupId>
+                <artifactId>ylzb-quartz</artifactId>
+                <version>${ylzb.version}</version>
             </dependency>
 
             <!-- 代码生成-->
             <dependency>
-                <groupId>com.xhzb</groupId>
-                <artifactId>xhzb-generator</artifactId>
-                <version>${xhzb.version}</version>
+                <groupId>com.ylzb</groupId>
+                <artifactId>ylzb-generator</artifactId>
+                <version>${ylzb.version}</version>
             </dependency>
 
             <!-- 核心模块-->
             <dependency>
-                <groupId>com.xhzb</groupId>
-                <artifactId>xhzb-framework</artifactId>
-                <version>${xhzb.version}</version>
+                <groupId>com.ylzb</groupId>
+                <artifactId>ylzb-framework</artifactId>
+                <version>${ylzb.version}</version>
             </dependency>
 
             <!-- 系统模块-->
             <dependency>
-                <groupId>com.xhzb</groupId>
-                <artifactId>xhzb-system</artifactId>
-                <version>${xhzb.version}</version>
+                <groupId>com.ylzb</groupId>
+                <artifactId>ylzb-system</artifactId>
+                <version>${ylzb.version}</version>
             </dependency>
 
             <!-- 通用工具-->
             <dependency>
-                <groupId>com.xhzb</groupId>
-                <artifactId>xhzb-common</artifactId>
-                <version>${xhzb.version}</version>
+                <groupId>com.ylzb</groupId>
+                <artifactId>ylzb-common</artifactId>
+                <version>${ylzb.version}</version>
             </dependency>
 
             <!-- 护理平台-->
             <dependency>
-                <groupId>com.xhzb</groupId>
-                <artifactId>xhzb-nursing-platform</artifactId>
-                <version>${xhzb.version}</version>
+                <groupId>com.ylzb</groupId>
+                <artifactId>ylzb-nursing-platform</artifactId>
+                <version>${ylzb.version}</version>
             </dependency>
 
             <!-- 护理平台-->
             <dependency>
-                <groupId>com.xhzb</groupId>
-                <artifactId>xhzb-oss</artifactId>
-                <version>${xhzb.version}</version>
+                <groupId>com.ylzb</groupId>
+                <artifactId>ylzb-oss</artifactId>
+                <version>${ylzb.version}</version>
             </dependency>
 
             <dependency>
@@ -202,14 +209,14 @@
     </dependencyManagement>
 
     <modules>
-        <module>xhzb-admin</module>
-        <module>xhzb-framework</module>
-        <module>xhzb-system</module>
-        <module>xhzb-quartz</module>
-        <module>xhzb-generator</module>
-        <module>xhzb-common</module>
-        <module>xhzb-nursing-platform</module>
-        <module>xhzb-oss</module>
+        <module>ylzb-admin</module>
+        <module>ylzb-framework</module>
+        <module>ylzb-system</module>
+        <module>ylzb-quartz</module>
+        <module>ylzb-generator</module>
+        <module>ylzb-common</module>
+        <module>ylzb-nursing-platform</module>
+        <module>ylzb-oss</module>
     </modules>
     <packaging>pom</packaging>
 

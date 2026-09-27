@@ -43,6 +43,9 @@ nbdist/
 *.xml.versionsBackup
 *.swp
 
+# 本地私密配置（API Key 等）
+local-secrets.yml
+
 !*/build/*.java
 !*/build/*.html
 !*/build/*.xml
