@@ -20,7 +20,7 @@ server:
 logging:
   level:
     com.ylzb: debug
-    org.springframework: warn
+    org.springframework.ai: debug # AI对话的日志级别
 
 # Spring配置
 spring:

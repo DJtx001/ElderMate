@@ -2,12 +2,10 @@
   <div class="sidebar-logo-container" :class="{ 'collapse': collapse }" :style="{ backgroundColor: sideTheme === 'theme-dark' ? variables.menuBackground : variables.menuLightBackground }">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <!-- <h1 v-else class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.logoTitleColor : variables.logoLightTitleColor }">{{ title }}</h1> -->
+        <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo" />
-        <!-- <h1 class="sidebar-title" :style="{ color: sideTheme === 'theme-dark' ? variables.logoTitleColor : variables.logoLightTitleColor }">{{ title }}</h1> -->
+        <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
     </transition>
   </div>
@@ -15,7 +13,6 @@
 
 <script setup>
 import variables from '@/assets/styles/variables.module.scss'
-import logo from '@/assets/logo/logo.png'
 import useSettingsStore from '@/store/modules/settings'
 
 defineProps({
@@ -54,29 +51,47 @@ const sideTheme = computed(() => settingsStore.sideTheme);
     height: 100%;
     width: 100%;
 
-    & .sidebar-logo {
-      
-      width: 143px;
-      height: 46px;
-      vertical-align: middle;
-      margin-right: 12px;
-    }
-
     & .sidebar-title {
       display: inline-block;
       margin: 0;
-      color: #fff;
-      font-weight: 600;
       line-height: 50px;
-      font-size: 14px;
-      font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      font-family: "PingFang SC", "Microsoft YaHei", "Source Han Sans CN", sans-serif;
       vertical-align: middle;
+
+      /* 渐变艺术字 */
+      background: linear-gradient(120deg, #00a76f 0%, #00c389 45%, #22d3a5 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 1px 1px rgba(0, 167, 111, 0.25));
+
+      /* 标题前的小圆点装饰 */
+      &::before {
+        content: '';
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #00c389, #22d3a5);
+        box-shadow: 0 0 0 3px rgba(0, 195, 137, 0.15);
+        margin-right: 9px;
+        vertical-align: middle;
+      }
     }
   }
 
+  /* 折叠态：缩小字号、隐藏装饰，保证放得下 */
   &.collapse {
-    .sidebar-logo {
-      margin-right: 0px;
+    .sidebar-title {
+      font-size: 13px;
+      letter-spacing: 0;
+
+      &::before {
+        display: none;
+      }
     }
   }
 }
