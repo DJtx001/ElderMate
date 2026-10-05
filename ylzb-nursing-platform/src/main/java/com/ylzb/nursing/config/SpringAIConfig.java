@@ -3,6 +3,7 @@ package com.ylzb.nursing.config;
 import com.ylzb.nursing.constans.SystemConstants;
 import com.ylzb.nursing.service.impl.RedisChatMemoryService;
 import com.ylzb.nursing.tools.WeatherTools;
+import com.ylzb.nursing.tools.NursingTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
@@ -24,7 +25,7 @@ public class SpringAIConfig {
      * @return
      */
     @Bean
-    public ChatClient chatClient(OpenAiChatModel openAiChatModel, VectorStore vectorStore, RedisChatMemoryService redisChatMemoryService) {
+    public ChatClient chatClient(OpenAiChatModel openAiChatModel, VectorStore vectorStore, RedisChatMemoryService redisChatMemoryService, NursingTools nursingTools) {
         // 检索rag的数据
         QuestionAnswerAdvisor questionAnswerAdvisor = QuestionAnswerAdvisor
                 .builder(vectorStore)
@@ -41,6 +42,7 @@ public class SpringAIConfig {
                         new SimpleLoggerAdvisor(),
                         MessageChatMemoryAdvisor.builder(redisChatMemoryService).build(),questionAnswerAdvisor
                 )
+                .defaultTools(nursingTools)
                 .build();
     }
 
