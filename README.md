@@ -13,7 +13,7 @@
 [![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)](#)
 [![Vue](https://img.shields.io/badge/Vue-3.4-4FC08D?logo=vuedotjs&logoColor=white)](#)
 [![Element Plus](https://img.shields.io/badge/Element_Plus-2.4-409EFF)](#)
-[![License](https://img.shields.io/badge/License-Unlicense-lightgrey)](#)
+[![License](https://img.shields.io/badge/License-MIT-green)](#)
 
 [**核心功能**](#五核心功能)　·　[**技术栈**](#四技术栈)　·　[**项目结构**](#六项目结构)　·　[**快速开始**](#七快速开始)
 
@@ -190,8 +190,8 @@ npm run dev
 
 ## 八、许可与致谢
 
-- 本仓库附带 [LICENSE](LICENSE)（Unlicense，公有领域），仅用于学习交流
-- 后端脚手架基于 [RuoYi](https://gitee.com/y_project/RuoYi-Vue)（MIT）二次开发，护理业务、机构管理与 AI 能力为新增部分
+- 本仓库沿用脚手架携带的 [LICENSE](LICENSE)（MIT · Copyright (c) 2018 RuoYi），仅用于学习交流
+- 后端基于 [RuoYi](https://gitee.com/y_project/RuoYi-Vue)（MIT）二次开发，护理业务、机构管理与 AI 能力为新增部分
 - AI 功能依赖 [阿里云百炼](https://bailian.console.aliyun.com/) 提供的模型服务，请自行申请 API Key 并注意密钥安全
 
 ---
