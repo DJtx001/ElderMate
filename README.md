@@ -1,6 +1,52 @@
-# 养老智伴（ElderMate）智慧养老护理服务平台
+<div align="center">
 
-> 集成 Spring AI 大模型能力的智慧养老后台管理系统。
+# 养老智伴 · ElderMate
+
+**面向中小型养老机构的智慧护理服务平台**
+
+从「护理计划制定」到「AI 一句话查清价格」——把大模型接进养老院的日常业务流
+
+[![Java](https://img.shields.io/badge/Java-17-ED8B00?logo=openjdk&logoColor=white)](#)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-6DB33F?logo=springboot&logoColor=white)](#)
+[![Spring AI](https://img.shields.io/badge/Spring_AI-1.1.2-6DB33F)](#)
+[![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)](#)
+[![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white)](#)
+[![Vue](https://img.shields.io/badge/Vue-3.4-4FC08D?logo=vuedotjs&logoColor=white)](#)
+[![Element Plus](https://img.shields.io/badge/Element_Plus-2.4-409EFF)](#)
+[![License](https://img.shields.io/badge/License-Unlicense-lightgrey)](#)
+
+[**核心功能**](#五核心功能)　·　[**技术栈**](#四技术栈)　·　[**项目结构**](#六项目结构)　·　[**快速开始**](#七快速开始)
+
+<sub>Spring Boot 3.5 多模块 · Spring AI 1.1.2 · Vue 3.4 · MySQL 8 / Redis</sub>
+
+</div>
+
+---
+
+## 30 秒读懂
+
+| 维度 | 一句话 |
+|---|---|
+| **是什么** | 养老机构的护理业务管理后台，内置「小戴 AI 助手」 |
+| **解决什么** | 护理计划 / 等级 / 项目的定价靠人工经验，数据分散、查询靠翻表 |
+| **AI 怎么接** | 通义千问 + Spring AI：SSE 流式对话、Redis 多轮记忆、Tool Calling 直查业务库、RAG 知识库问答 |
+| **技术底座** | Spring Boot 3.5 多模块（RuoYi 脚手架）+ Vue 3 + MySQL / Redis |
+| **我的工作** | AI 对话链路、RAG 入库与检索、护理业务建模、机构资源管理、工程规范 |
+
+> **设计主张**：「有哪些护理等级、价格多少、某个计划包含哪些护理项」这类问题，应该由 AI 直接查数据库回答，而不是让护理主管翻 Excel —— 答案要能落回业务表，而不是模型编造的漂亮话。
+
+---
+
+## 目录
+
+- [一、项目背景（Situation）](#一项目背景situation)
+- [二、项目目标（Task）](#二项目目标task)
+- [三、我的工作与技术亮点（Action & Result）](#三我的工作与技术亮点action--result)
+- [四、技术栈](#四技术栈)
+- [五、核心功能](#五核心功能)
+- [六、项目结构](#六项目结构)
+- [七、快速开始](#七快速开始)
+- [八、许可与致谢](#八许可与致谢)
 
 ---
 
@@ -8,7 +54,7 @@
 
 随着老龄化加剧，养老院的护理计划制定、护理等级定价、护理项执行等核心业务高度依赖人工经验，信息分散且查询不便。同时，一线护理人员与管理人员缺乏一个能直接用自然语言获取业务数据的入口。
 
-本项目面向中小型养老机构，提供护理计划/等级/项目的标准化管理，并在此基础上接入大模型，让 AI 助手能直接回答"有哪些护理等级、价格多少、某计划包含哪些护理项"等业务问题。
+本项目面向中小型养老机构，提供护理计划 / 等级 / 项目的标准化管理，并在此基础上接入大模型，让 AI 助手能直接回答「有哪些护理等级、价格多少、某计划包含哪些护理项」等业务问题。
 
 ## 二、项目目标（Task）
 
@@ -18,6 +64,20 @@
 4. 通过 Tool Calling 让 AI 能直接查询业务数据库中的护理计划、等级、护理项等结构化数据
 
 ## 三、我的工作与技术亮点（Action & Result）
+
+先看整条 AI 链路——一次提问，是怎么从浏览器流到数据库和向量库的：
+
+```mermaid
+flowchart LR
+    U["Vue3 前端<br/>小戴 AI 助手"] -->|"SSE 流式渲染"| C["ChatController"]
+    C --> CC["ChatClient<br/>Spring AI"]
+    CC -->|"OpenAI 兼容协议"| LLM["通义千问<br/>阿里云百炼"]
+    CC <-->|"按 chatId 存取"| MEM[("Redis<br/>ChatMemory")]
+    CC -->|"Tool Calling"| T["NursingTools<br/>@Tool 业务查询"]
+    T --> DB[("MySQL<br/>护理计划 / 等级 / 项目")]
+    CC -->|"QuestionAnswerAdvisor"| V[("Redis 向量库<br/>text-embedding-v3")]
+    KB["知识库文档<br/>PDF / Word / Txt"] -->|"Tika 解析 + TextSplitter"| V
+```
 
 ### 1. AI 对话助手（Spring AI + DashScope）
 
@@ -46,7 +106,7 @@
 
 - **护理项目**：原子护理服务项，含名称、单位、单价、护理要求
 - **护理计划**：由多个护理项目组合，关联表记录执行时间、周期、频次
-- **护理等级**：绑定护理计划，设置等级费用，形成"等级 → 计划 → 项目"的定价体系
+- **护理等级**：绑定护理计划，设置等级费用，形成「等级 → 计划 → 项目」的定价体系
 
 ### 4. 机构管理模块
 
@@ -61,12 +121,12 @@
 ## 四、技术栈
 
 | 层次 | 技术 |
-| --- | --- |
-| 后端框架 | Spring Boot 3.5.0、Spring Security + JWT、MyBatis / PageHelper |
-| AI 能力 | Spring AI 1.1.2（DashScope OpenAI 兼容模式）、Tika 文档解析、Redis 向量库 |
-| 数据存储 | MySQL、Redis |
+|---|---|
+| 后端框架 | Spring Boot 3.5.0 · Spring Security + JWT · MyBatis / PageHelper |
+| AI 能力 | Spring AI 1.1.2（DashScope OpenAI 兼容模式）· Tika 文档解析 · Redis 向量库 |
+| 数据存储 | MySQL 8 · Redis 7 |
 | 前端 | Vue 3.4 + Vite 5 + Element Plus 2.4 + Pinia |
-| 其他 | Quartz、springdoc-openapi（Swagger）、WebSocket、阿里云 OSS |
+| 其他 | Quartz · springdoc-openapi（Swagger）· WebSocket · 阿里云 OSS |
 
 ## 五、核心功能
 
@@ -83,7 +143,7 @@
 ylzb
 ├── ylzb-admin             # Web 服务入口（启动模块，端口 8080）
 ├── ylzb-framework         # 框架核心：安全、拦截、数据源等配置
-├── ylzb-system            # 系统模块：用户/角色/菜单/日志
+├── ylzb-system            # 系统模块：用户 / 角色 / 菜单 / 日志
 ├── ylzb-nursing-platform  # 养老护理业务模块（AI 对话 + RAG + 护理 + 机构）
 ├── ylzb-quartz            # 定时任务模块
 ├── ylzb-generator         # 代码生成模块
@@ -107,7 +167,7 @@ ylzb
 2. 修改 `ylzb-admin/src/main/resources/application-dev.yml` 中的数据库与 Redis 地址
 3. 配置 AI 访问密钥（二选一）：
    - 设置环境变量 `DASHSCOPE_API_KEY`
-   - 或在 `ylzb-admin/src/main/resources/` 下新建 `local-secrets.yml`（已被 .gitignore 忽略，不会提交）：
+   - 或在 `ylzb-admin/src/main/resources/` 下新建 `local-secrets.yml`（已被 `.gitignore` 忽略，不会提交）：
 
      ```yaml
      spring:
@@ -128,7 +188,14 @@ npm run dev
 
 浏览器访问 `http://localhost:80`（默认账号 admin / admin123）。
 
-## 八、相关说明
+## 八、许可与致谢
 
-- 本项目遵循开源协议，仅用于学习交流
-- AI 功能依赖[阿里云百炼](https://bailian.console.aliyun.com/)平台提供的模型服务，请自行申请 API Key 并注意密钥安全
+- 本仓库附带 [LICENSE](LICENSE)（Unlicense，公有领域），仅用于学习交流
+- 后端脚手架基于 [RuoYi](https://gitee.com/y_project/RuoYi-Vue)（MIT）二次开发，护理业务、机构管理与 AI 能力为新增部分
+- AI 功能依赖 [阿里云百炼](https://bailian.console.aliyun.com/) 提供的模型服务，请自行申请 API Key 并注意密钥安全
+
+---
+
+<div align="center">
+<sub>如果这个项目对你有帮助，欢迎点个 Star ⭐</sub>
+</div>
